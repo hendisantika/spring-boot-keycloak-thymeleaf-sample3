@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot + Keycloak</title>
+</head>
+<body>
+<h1>Welcome to Spring Boot + Keycloak OAuth2 Application</h1>
+
+<div th:if="${not #authentication.principal}">
+    <a href="/oauth2/authorization/keycloak">Login with Keycloak</a>
+</div>
+
+<div th:if="${#authentication.principal}">
+    <p>Welcome, <span th:text="${#authentication.principal.name}">User</span>!</p>
+    <a href="/logout">Logout</a>
+</div>
+
+</body>
+</html>
