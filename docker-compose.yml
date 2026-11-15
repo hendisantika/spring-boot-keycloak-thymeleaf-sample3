@@ -1,35 +1,37 @@
 services:
-  another-database-if-you-need: # Example. Remove before using.
+  postgres17:
     image: postgres:17-alpine3.20
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - local_network
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.0
+    image: quay.io/keycloak/keycloak:26.0.6
     environment:
       KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 7080
+      KC_HOSTNAME_PORT: 9080
       KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: "true"
       KC_LOG_LEVEL: info
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:7080/health/ready" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:9080/health/ready" ]
       interval: 15s
       timeout: 2s
       retries: 15
-    command: [ "start-dev", "--http-port", "7080", "--https-port", "7443", "--import-realm" ]
+    command: [ "start-dev", "--http-port", "9080", "--https-port", "7443", "--import-realm" ]
     volumes: # Ignore if you don't have realm-export.json to migrate data
-      - ../keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
     ports:
-      - "7080:7080"
+      - "9080:9080"
       - "7443:7443"
+    expose:
+      - "9080"
     networks:
       - local_network
 networks:
