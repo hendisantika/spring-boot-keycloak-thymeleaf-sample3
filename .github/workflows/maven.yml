@@ -36,6 +36,8 @@ jobs:
 
     # Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts.
     # Skipped on pull requests: PR tokens (forks / Dependabot) are read-only.
+    # Non-blocking: requires "Dependency graph" to be enabled in the repository settings.
     - name: Update dependency graph
       if: github.event_name != 'pull_request'
+      continue-on-error: true
       uses: advanced-security/maven-dependency-submission-action@a64327a7329c9939cf675e458452febe1894a70c
