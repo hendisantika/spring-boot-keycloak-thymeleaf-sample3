@@ -2,9 +2,10 @@ package id.my.hendisantika.keycloakthymeleaf.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,10 +28,9 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
 
                 )
-                .oauth2Login() // Enable OAuth2 login with Keycloak
-                .and()
+                .oauth2Login(Customizer.withDefaults()) // Enable OAuth2 login with Keycloak
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+                        .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher("/logout")).permitAll()
                         .logoutSuccessUrl("/")
                 );
         return http.build();
