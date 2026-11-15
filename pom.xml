@@ -14,7 +14,7 @@
     <name>spring-boot-keycloak-thymeleaf-sample3</name>
     <description>spring-boot-keycloak-thymeleaf-sample3</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
     </properties>
     <dependencies>
         <!-- Spring Boot dependencies -->
