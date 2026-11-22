@@ -10,7 +10,7 @@ services:
     networks:
       - local_network
   keycloak:
-    image: quay.io/keycloak/keycloak:26.8.2-2
+    image: quay.io/keycloak/keycloak:26.8.2-3
     environment:
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 9080
